@@ -113,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
         String userId = mAuth.getCurrentUser().getUid();
         long  timestamp = System.currentTimeMillis();
+        String branch = "Behala";
         Query query = FirebaseDatabase.getInstance()
-                .getReference().child("Booking_Completed").child(userId);
+                .getReference().child(branch).child("Booking_Completed").child(userId);
         FirebaseRecyclerOptions<BookingCompleted> options =
                 new FirebaseRecyclerOptions.Builder<BookingCompleted>()
                         .setQuery(query, BookingCompleted.class)
