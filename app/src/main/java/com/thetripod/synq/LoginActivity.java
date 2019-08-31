@@ -49,7 +49,7 @@ public class LoginActivity extends FragmentActivity  implements NumberFragment.O
 
     }
 
-    //this is to check whether pushing is workingggg
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
