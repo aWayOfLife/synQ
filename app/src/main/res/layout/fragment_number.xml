@@ -10,11 +10,20 @@
         android:orientation="vertical">
         <!-- TODO: Update blank fragment layout -->
         <EditText
+            android:id="@+id/enter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your name"
+            android:layout_marginTop="50dp"
+            android:inputType="text"/>
+
+        <EditText
             android:id="@+id/enter_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="enter number"
-            android:layout_marginTop="50dp"/>
+            android:hint="Enter number"
+            android:layout_marginTop="50dp"
+            android:inputType="phone"/>
         <Button
             android:id="@+id/button_confirm_number"
             android:layout_marginTop="50dp"

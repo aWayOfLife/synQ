@@ -7,30 +7,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/coupon_no"
+            android:id="@+id/branch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="COUPON NUMBER : 15"/>
+            android:text="branch : beahla"/>
         <TextView
-            android:id="@+id/slot"
+            android:id="@+id/bookingID"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SLOT : 10:30-11:30"/>
         <TextView
-            android:id="@+id/activity"
+            android:id="@+id/serviceID"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ACTIVITY : CASH DEPOSIT"/>
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/bankerID"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="STATUS : 20 PEOPLE IN QUEUE"/>
         <TextView
-            android:id="@+id/eta"
+            android:id="@+id/timeStamp"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
