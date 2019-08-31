@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "226502907853-spdi3fdnpqtq046htuvg82c2cs4tdehh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thetripod.synq",
+            "certificate_hash": "9518cbce524be54e23a155ee07a9f1a8e81b7f03"
+          }
+        },
+        {
           "client_id": "226502907853-i7kkvl2jfcjqaaipl73m6r7r1lsahmiv.apps.googleusercontent.com",
           "client_type": 3
         }
