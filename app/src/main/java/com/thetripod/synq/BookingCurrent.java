@@ -9,11 +9,12 @@ public class BookingCurrent {
     private String status;
     private String eta;
     private String queuePosition;
+    private String bookingId;
 
     public BookingCurrent() {
     }
 
-    public BookingCurrent(String userId, String serviceId, String slot, String branch, String bookingTimestamp, String status, String eta, String queuePosition) {
+    public BookingCurrent(String userId, String serviceId, String slot, String branch, String bookingTimestamp, String status, String eta, String queuePosition, String bookingId) {
         this.userId = userId;
         this.serviceId = serviceId;
         this.slot = slot;
@@ -22,6 +23,7 @@ public class BookingCurrent {
         this.status = status;
         this.eta = eta;
         this.queuePosition = queuePosition;
+        this.bookingId = bookingId;
     }
 
     public String getUserId() {
@@ -86,5 +88,13 @@ public class BookingCurrent {
 
     public void setQueuePosition(String queuePosition) {
         this.queuePosition = queuePosition;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 }
