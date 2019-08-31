@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "226502907853",
+    "firebase_url": "https://synq-a8e8b.firebaseio.com",
+    "project_id": "synq-a8e8b",
+    "storage_bucket": "synq-a8e8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226502907853:android:e95f50df77bd0a32",
+        "android_client_info": {
+          "package_name": "com.thetripod.synq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226502907853-i7kkvl2jfcjqaaipl73m6r7r1lsahmiv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW8-zSRnehRLd6F_Ete-QB-zASPO0YRmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226502907853-i7kkvl2jfcjqaaipl73m6r7r1lsahmiv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
