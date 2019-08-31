@@ -39,13 +39,15 @@ public class BookingActivity extends AppCompatActivity {
         long timestamp = System.currentTimeMillis();
         String userId = mAuth.getCurrentUser().getUid();
         String branch = "Behala";
+        String date = "01-09-2019";
+        String availableSlot = "1";
         mDatabase = FirebaseDatabase.getInstance().getReference().child(branch).child("Booking_Current");
         BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),slot.getText().toString(), "behala", timestamp+"","ongoing","20 mins","10");
         mDatabase.child(userId).setValue(bookingCurrent);
 
-        nDatabase = FirebaseDatabase.getInstance().getReference().child(branch).child("Booking_Queue").child(""+timestamp).child(slot.getText().toString());
+        nDatabase = FirebaseDatabase.getInstance().getReference().child(branch).child("Booking_Queue").child(date).child(availableSlot);
         BookingCurrent bookingQueueItem = new BookingCurrent(userId, serviceId.getText().toString(),slot.getText().toString(), "behala", timestamp+"","ongoing","20 mins","10");
-        mDatabase.child(""+timestamp).setValue(bookingQueueItem);
+        nDatabase.child(""+timestamp).setValue(bookingQueueItem);
 
 
     }
