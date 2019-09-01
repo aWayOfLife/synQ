@@ -8,17 +8,65 @@
     tools:context=".BookingActivity"
     android:orientation="vertical"
     tools:showIn="@layout/activity_booking">
-    <EditText
-        android:id="@+id/enter_slot"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Slot"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/enter_slot"
+            android:layout_width="112dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="Choose Slot"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spin_slot"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:entries="@array/slot_selector" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/enter_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Activity"/>
+        android:hint="Activity"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Select Branch below"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spin_city"
+            android:layout_width="152dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:entries="@array/city_selector" />
+
+        <Spinner
+            android:id="@+id/spin_branch"
+            android:layout_width="152dp"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+     
 
 
 </LinearLayout>
