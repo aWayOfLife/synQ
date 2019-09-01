@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.hbb20.CountryCodePicker;
 
 
 /**
@@ -33,7 +36,7 @@ public class NumberFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private EditText name;
     private OnFragmentInteractionListener mListener;
 
     public NumberFragment() {
@@ -71,18 +74,22 @@ public class NumberFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_number, container, false);
-        Button confirm_number = rootView.findViewById(R.id.button_confirm_number);
-        phoneNumber=rootView.findViewById(R.id.enter_number);
-
-        confirm_number.setOnClickListener(new View.OnClickListener() {
+                final View rootView = inflater.inflate(R.layout.fragment_number, container, false);
+                Button confirm_number = rootView.findViewById(R.id.button_confirm_number);
+                phoneNumber=rootView.findViewById(R.id.enter_number);
+                name = rootView.findViewById(R.id.enter_name);
+                confirm_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CountryCodePicker ccp;
+                ccp = (CountryCodePicker)rootView.findViewById(R.id.ccp);
 
-
-                String number = NumberToFirebase(phoneNumber.getText().toString().trim());
+                String numWithCode=ccp.getSelectedCountryCodeWithPlus() + phoneNumber.getText().toString().trim();
+                String number = NumberToFirebase(numWithCode);
+                Log.i("NumCheck",number);
                 Bundle args = new Bundle();
                 args.putString("NUMBER_TRANSFER",number);
+                args.putString("NAME_USER",name.getText().toString().trim());
                 OTPFragment fragment = new OTPFragment();
                 fragment.setArguments(args);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -143,7 +150,8 @@ public class NumberFragment extends Fragment {
             return null;
         }
         else {
-            String phonenumberfull = "+" + number;
+            //String phonenumberfull = "+" + number;
+            String phonenumberfull =  number;
             return phonenumberfull;
         }
     }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,21 +22,29 @@ import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
-
+import java.util.logging.Logger;
 
 
 public class OTPFragment extends Fragment {
 
     private String phone_number;
+    private String name;
     private EditText OTP;
     private FirebaseAuth mAuth;
     private OnFragmentInteractionListener mListener;
     private String verificationCode;
     private String otp_final;
+
+    private FirebaseUser use;
+    private String userId ;
+    DatabaseReference firebaseDatabase;
 
     public OTPFragment() {
         // Required empty public constructor
@@ -54,6 +63,7 @@ public class OTPFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             phone_number = getArguments().getString("NUMBER_TRANSFER");
+            name = getArguments().getString("NAME_USER");
             Toast.makeText(getContext(),phone_number, Toast.LENGTH_LONG).show();
         }
     }
@@ -63,10 +73,14 @@ public class OTPFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_otp, container, false);
+
         Button confirm_otp = rootView.findViewById(R.id.button_confirm_otp);
         OTP=rootView.findViewById(R.id.enter_otp);
-
+        firebaseDatabase= FirebaseDatabase.getInstance().getReference().child("User");
         mAuth = FirebaseAuth.getInstance();
+        /*use = FirebaseAuth.getInstance().getCurrentUser();
+
+        userId = use.getUid();*/
         phoneVerificationCode(phone_number);
         confirm_otp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +141,13 @@ public class OTPFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
+                    use = FirebaseAuth.getInstance().getCurrentUser();
+                    userId = use.getUid();
+                    UserDetails userDetails = new UserDetails(userId,name,phone_number);
+                    firebaseDatabase.child(userId).setValue(userDetails);
+
+
+                    Log.i("Post firebase", "Database user details added !"+userId);
                     Intent intent=new Intent(getContext(),MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

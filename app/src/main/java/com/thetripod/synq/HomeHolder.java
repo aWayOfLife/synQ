@@ -1,8 +1,6 @@
 package com.thetripod.synq;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,27 +18,22 @@ public class HomeHolder extends RecyclerView.ViewHolder {
             mContext = mView.getContext();
         }
 
-        public void setCouponNo(String couponNo) {
-            TextView field = (TextView) mView.findViewById(R.id.coupon_no);
-            field.setText(couponNo);
+        public void setBookingId(String bookingId) {
+            TextView field = (TextView) mView.findViewById(R.id.bookingID);
+            field.setText(bookingId);
         }
-
-        public void setSlot(String slot) {
-            TextView field = (TextView) mView.findViewById(R.id.slot);
-            field.setText(slot);
+        public void setBankerId(String bankerId) {
+            TextView field = (TextView) mView.findViewById(R.id.bankerID);
+            field.setText(bankerId);
         }
-        public void setActivity(String activity){
-            TextView field = (TextView) mView.findViewById(R.id.activity);
-            field.setText(activity);
-
+        public void setServiceId(String serviceId) {
+            TextView field = (TextView) mView.findViewById(R.id.serviceID);
+            field.setText(serviceId);
         }
-        public void setStatus(String status){
-            TextView field = (TextView) mView.findViewById(R.id.status);
-            field.setText(status);
-
+        public void setBookingTimestamp(String bookingTimestamp){
+            TextView field = (TextView)mView.findViewById(R.id.timeStamp);
         }
-        public void setEta(String eta){
-            TextView field = (TextView) mView.findViewById(R.id.eta);
-            field.setText(eta);
+        public void setBranch(String branchName){
+            TextView field = (TextView)mView.findViewById(R.id.branch);
         }
 }

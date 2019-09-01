@@ -10,6 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.firebase.FirebaseApp;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -17,32 +18,34 @@ import com.google.firebase.database.Query;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    FirebaseRecyclerAdapter<Booking, HomeHolder> mRecyclerViewAdapter;
-    private List<Booking> homeList = new ArrayList<Booking>();
+    FirebaseRecyclerAdapter<BookingCompleted, HomeHolder> mRecyclerViewAdapter;
+    private List<BookingCompleted> homeList = new ArrayList<BookingCompleted>();
     private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private TextView logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
+
+        mAuth = FirebaseAuth.getInstance();
         FloatingActionButton fab = findViewById(R.id.new_booking);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mRecyclerViewAdapter);
         //checksas
+        logout=findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -98,14 +111,17 @@ public class MainActivity extends AppCompatActivity {
 
     void prepareEntryData() {
 
+        String userId = mAuth.getCurrentUser().getUid();
+        long  timestamp = System.currentTimeMillis();
+        String branch = "Behala";
         Query query = FirebaseDatabase.getInstance()
-                .getReference().child("bookingUser");
-        FirebaseRecyclerOptions<Booking> options =
-                new FirebaseRecyclerOptions.Builder<Booking>()
-                        .setQuery(query, Booking.class)
+                .getReference().child(branch).child("Booking_Completed").child(userId);
+        FirebaseRecyclerOptions<BookingCompleted> options =
+                new FirebaseRecyclerOptions.Builder<BookingCompleted>()
+                        .setQuery(query, BookingCompleted.class)
                         .build();
 
-        mRecyclerViewAdapter = new FirebaseRecyclerAdapter<Booking, HomeHolder>(options){
+        mRecyclerViewAdapter = new FirebaseRecyclerAdapter<BookingCompleted, HomeHolder>(options){
             @NonNull
             @Override
             public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -116,12 +132,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull HomeHolder homeHolder, int i, @NonNull Booking booking) {
-                homeHolder.setCouponNo(booking.getCouponNo());
-                homeHolder.setSlot(booking.getSlot());
-                homeHolder.setActivity(booking.getActivity());
-                homeHolder.setStatus(booking.getStatus());
-                homeHolder.setEta(booking.getEta());
+            protected void onBindViewHolder(@NonNull HomeHolder homeHolder, int i, @NonNull BookingCompleted bookingCompleted) {
+                homeHolder.setBankerId(bookingCompleted.getBankerId());
+                homeHolder.setBookingId(bookingCompleted.getBookingId());
+                homeHolder.setBranch(bookingCompleted.getBranch());
+                homeHolder.setServiceId(bookingCompleted.getServiceId());
+                homeHolder.setBookingTimestamp(bookingCompleted.getBookingTimestamp());
 
             }
 

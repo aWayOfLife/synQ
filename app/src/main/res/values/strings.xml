@@ -5,4 +5,20 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string-array name="city_selector">
+        <item>Kolkata</item>
+        <item>Delhi</item>
+        <item>Bangalore</item>
+        <item>Mumbai</item>
+    </string-array>
+
+    <string-array name="slot_selector">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

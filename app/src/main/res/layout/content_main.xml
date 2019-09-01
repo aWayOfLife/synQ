@@ -17,13 +17,43 @@
             android:layout_height="wrap_content"
             android:text="Syndicate Bank"
             android:textSize="24sp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:id="@+id/logout"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Behala Branch"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Behala Branch"
+                android:textSize="20sp"
+                android:id="@+id/dropdown_spin_text"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Change  Branch"
+                android:textSize="10sp" />
+
+            <Spinner
+                android:id="@+id/spin_city"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:entries="@array/city_selector" />
+
+            <Spinner
+                android:id="@+id/spin_branch"
+                android:layout_width="152dp"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/booking_list"
             android:layout_marginTop="20dp"
