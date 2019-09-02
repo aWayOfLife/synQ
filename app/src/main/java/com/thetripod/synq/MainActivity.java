@@ -11,9 +11,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 import androidx.annotation.NonNull;
@@ -21,12 +24,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +44,24 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private TextView logout;
+    private TextView logout, bankerName, slot, serviceId, waitQueue, eta,branchNameMain;
+    private Spinner sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bankerName = findViewById(R.id.bankerName_current);
+        serviceId = findViewById(R.id.serviceID_current);
+        slot = findViewById(R.id.slot_current);
+        waitQueue = findViewById(R.id.waitQueue_current);
+        eta = findViewById(R.id.eta_current);
+        sp=findViewById(R.id.spin_bangalore_city);
+        branchNameMain=findViewById(R.id.branch_name_main);
+
         FirebaseApp.initializeApp(this);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         FloatingActionButton fab = findViewById(R.id.new_booking);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startBookingActivity);
             }
         });
-        prepareEntryData();
+        viewPreviousBookings();
+        viewCurrentBookings();
+        String spin=String.valueOf(sp.getSelectedItem());
+        branchNameMain.setText(spin);
+        Log.i("string",spin);
+        Toast.makeText(MainActivity.this,spin, Toast.LENGTH_SHORT).show();
         recyclerView = (RecyclerView)findViewById(R.id.booking_list);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -109,13 +130,14 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerViewAdapter.stopListening();
     }
 
-    void prepareEntryData() {
+    void viewPreviousBookings() {
 
         String userId = mAuth.getCurrentUser().getUid();
         long  timestamp = System.currentTimeMillis();
-        String branch = "Behala";
+        String branch = "AF SCHOOL DELHI";
+        String city = "Delhi";
         Query query = FirebaseDatabase.getInstance()
-                .getReference().child(branch).child("Booking_Completed").child(userId);
+                .getReference().child("bookings").child(city).child(branch).child("Booking_Completed").child(userId);
         FirebaseRecyclerOptions<BookingCompleted> options =
                 new FirebaseRecyclerOptions.Builder<BookingCompleted>()
                         .setQuery(query, BookingCompleted.class)
@@ -147,4 +169,58 @@ public class MainActivity extends AppCompatActivity {
         ;
 
     }
+
+    void viewCurrentBookings(){
+
+        String branch = "AF SCHOOL DELHI";
+        String city = "Delhi";
+        Toast.makeText(MainActivity.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+        final DatabaseReference mRef1 = mDatabase.child("bookings").child(city).child(branch).child("Booking_Current").child(mAuth.getCurrentUser().getUid());
+        Log.i("REERENCE",mRef1.toString());
+        mRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                BookingCurrent bookingCurrent = dataSnapshot.getValue(BookingCurrent.class);
+                serviceId.setText("");
+                eta.setText("");
+                waitQueue.setText("");
+                slot.setText("");
+                bankerName.setText("");
+                //Log.i("TAG", bookingCurrent.toString());
+                if(null!= bookingCurrent) {
+                    serviceId.setText(bookingCurrent.getServiceId());
+                    eta.setText(bookingCurrent.getEta());
+                    waitQueue.setText(bookingCurrent.getQueuePosition());
+                    slot.setText(bookingCurrent.getSlot());
+                    if (null != bookingCurrent.getBankerId()) {
+                        final DatabaseReference mRef2 = mDatabase.child("Banker").child(bookingCurrent.getBankerId());
+                        mRef2.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                BankerDetails bankerDetails = dataSnapshot.getValue(BankerDetails.class);
+                                bankerName.setText(bankerDetails.getName());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                    bankerName.setText("Not Yet Assignd");
+                }
+
+                serviceId.setText("There are no current bookings");
+
+                //mRef1.re
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 }

@@ -15,10 +15,16 @@
         <item>Mumbai</item>
     </string-array>
 
+    <string-array name="bangalore_selector">
+        <item>Card Centre</item>
+        <item>CO GAD</item>
+        <item>DEVENAHALLI</item>
+        <item>J C ROAD</item>
+    </string-array>
     <string-array name="slot_selector">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
+        <item>10:00 - 12:00</item>
+        <item>12:00 - 13:00</item>
+        <item>13:00 - 14:00</item>
+        <item>15:00 - 16:00</item>
     </string-array>
 </resources>

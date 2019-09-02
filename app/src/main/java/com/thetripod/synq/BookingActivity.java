@@ -51,20 +51,20 @@ public class BookingActivity extends AppCompatActivity implements
         String availableslot=String.valueOf(spin_slot.getSelectedItem());
         EditText serviceId = findViewById(R.id.enter_activity);
         long timestamp = System.currentTimeMillis();
-        String sp2= String.valueOf(spin_branch.getSelectedItem());
+        String sp2= String.valueOf(spin_branch.getSelectedItem());String city =  String.valueOf(spin_city.getSelectedItem());
         String userId = mAuth.getCurrentUser().getUid();
         String branch = sp2;
         String date = "01-09-2019";
         //String availableSlot = "1";
-        String city =  String.valueOf(spin_city.getSelectedItem());
+
 
         Toast.makeText(this, sp2, Toast.LENGTH_SHORT).show();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Current");
-        BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch , timestamp+"","ongoing","20 mins","10", "1");
+        BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch , timestamp+"","ongoing","20 mins","10", "1",null);
         mDatabase.child(userId).setValue(bookingCurrent);
 
         nDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Queue").child(date).child(availableslot);
-        BookingCurrent bookingQueueItem = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch, timestamp+"","ongoing","20 mins","10", "1");
+        BookingCurrent bookingQueueItem = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch, timestamp+"","ongoing","20 mins","10", "1",null);
         nDatabase.child(""+timestamp).setValue(bookingQueueItem);
 
 
