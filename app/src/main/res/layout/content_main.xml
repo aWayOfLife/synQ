@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Syndicate Bank"
+            android:text="Kolkata"
             android:textSize="24sp"
             android:textStyle="bold"
             android:id="@+id/logout"/>
@@ -32,13 +32,6 @@
                 android:id="@+id/dropdown_spin_text"
                 android:layout_marginRight="10dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Change  Branch"
-                android:textSize="10sp" />
-
             <Spinner
                 android:id="@+id/spin_city"
                 android:layout_width="60dp"
@@ -48,12 +41,75 @@
 
             <Spinner
                 android:id="@+id/spin_branch"
-                android:layout_width="152dp"
+                android:layout_width="76dp"
                 android:layout_height="match_parent" />
 
 
         </LinearLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current booking"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="20dp"/>
+<!--
+                <TextView
+
+                    android:id="@+id/branch_current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="branch : behala"/>
+-->
+                <TextView
+                    android:id="@+id/bankerName_current"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Banker : Mr. Haripada Bandwala"/>
+
+                <TextView
+                    android:id="@+id/slot_current"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SLOT : 10:30-11:30"/>
+                <TextView
+                    android:id="@+id/serviceID_current"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ACTIVITY : CASH DEPOSIT"/>
+                <TextView
+                    android:id="@+id/waitQueue_current"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STATUS : 20 PEOPLE IN QUEUE"/>
+                <TextView
+                    android:id="@+id/eta_current"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ETA : 15 MINS"/>
+            </LinearLayout>
+
+        </FrameLayout>
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Previous booking"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/booking_list"
             android:layout_marginTop="20dp"
