@@ -12,42 +12,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kolkata"
+            android:text="Bangalore"
+            android:textColor="#2196F3"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:id="@+id/logout"/>
+            android:textStyle="bold" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_marginTop="5dp"
+                android:id="@+id/branch_name_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Behala Branch"
-                android:textSize="20sp"
-                android:id="@+id/dropdown_spin_text"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:text="Card centre Branch"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:text="change branch"
+                android:textAlignment="textStart"
+                android:textColor="@color/design_default_color_primary"
+                android:textSize="10sp"
+                />
 
             <Spinner
-                android:id="@+id/spin_city"
+                android:id="@+id/spin_bangalore_city"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
-                android:entries="@array/city_selector" />
-
-            <Spinner
-                android:id="@+id/spin_branch"
-                android:layout_width="76dp"
-                android:layout_height="match_parent" />
+                android:entries="@array/bangalore_selector"/>
 
 
         </LinearLayout>
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
@@ -73,33 +83,31 @@
                     android:id="@+id/bankerName_current"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Banker : Mr. Haripada Bandwala"/>
-
+                    android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/slot_current"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SLOT : 10:30-11:30"/>
+                    />
                 <TextView
                     android:id="@+id/serviceID_current"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ACTIVITY : CASH DEPOSIT"/>
+                    />
                 <TextView
                     android:id="@+id/waitQueue_current"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="STATUS : 20 PEOPLE IN QUEUE"/>
+                    />
                 <TextView
                     android:id="@+id/eta_current"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ETA : 15 MINS"/>
+                    />
             </LinearLayout>
 
         </FrameLayout>

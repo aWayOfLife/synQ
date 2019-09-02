@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private TextView logout, bankerName, slot, serviceId, waitQueue, eta;
+    private TextView logout, bankerName, slot, serviceId, waitQueue, eta,branchNameMain;
+    private Spinner sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         slot = findViewById(R.id.slot_current);
         waitQueue = findViewById(R.id.waitQueue_current);
         eta = findViewById(R.id.eta_current);
+        sp=findViewById(R.id.spin_bangalore_city);
+        branchNameMain=findViewById(R.id.branch_name_main);
 
         FirebaseApp.initializeApp(this);
 
@@ -66,9 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startBookingActivity);
             }
         });
-       viewPreviousBookings();
-       viewCurrentBookings();
-
+        viewPreviousBookings();
+        viewCurrentBookings();
+        String spin=String.valueOf(sp.getSelectedItem());
+        branchNameMain.setText(spin);
+        Log.i("string",spin);
+        Toast.makeText(MainActivity.this,spin, Toast.LENGTH_SHORT).show();
         recyclerView = (RecyclerView)findViewById(R.id.booking_list);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -174,6 +181,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BookingCurrent bookingCurrent = dataSnapshot.getValue(BookingCurrent.class);
+                serviceId.setText("");
+                eta.setText("");
+                waitQueue.setText("");
+                slot.setText("");
+                bankerName.setText("");
                 //Log.i("TAG", bookingCurrent.toString());
                 if(null!= bookingCurrent) {
                     serviceId.setText(bookingCurrent.getServiceId());
@@ -197,8 +209,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     bankerName.setText("Not Yet Assignd");
                 }
+
                 serviceId.setText("There are no current bookings");
 
+                //mRef1.re
             }
 
             @Override
