@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private TextView logout, bankerName, slot, serviceId, waitQueue, eta,branchNameMain;
+    TextView currentBookingStatus;
+    LinearLayout currentBookingInfo;
     private Spinner sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
         slot = findViewById(R.id.slot_current);
         waitQueue = findViewById(R.id.waitQueue_current);
         eta = findViewById(R.id.eta_current);
-        sp=findViewById(R.id.spin_bangalore_city);
+
+        currentBookingInfo = findViewById(R.id.current_booking_info);
+        currentBookingStatus = findViewById(R.id.current_booking_status);
+
         branchNameMain=findViewById(R.id.branch_name_main);
 
         FirebaseApp.initializeApp(this);
@@ -72,10 +78,10 @@ public class MainActivity extends AppCompatActivity {
         });
         viewPreviousBookings();
         viewCurrentBookings();
-        String spin=String.valueOf(sp.getSelectedItem());
-        branchNameMain.setText(spin);
-        Log.i("string",spin);
-        Toast.makeText(MainActivity.this,spin, Toast.LENGTH_SHORT).show();
+        //String spin=String.valueOf(sp.getSelectedItem());
+        //branchNameMain.setText(spin);
+        //Log.i("string",spin);
+        //Toast.makeText(MainActivity.this,spin, Toast.LENGTH_SHORT).show();
         recyclerView = (RecyclerView)findViewById(R.id.booking_list);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -181,13 +187,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BookingCurrent bookingCurrent = dataSnapshot.getValue(BookingCurrent.class);
-                serviceId.setText("");
-                eta.setText("");
-                waitQueue.setText("");
-                slot.setText("");
-                bankerName.setText("");
+                currentBookingStatus.setVisibility(View.VISIBLE);
+                currentBookingStatus.setText("There are no current bookings");
+                currentBookingInfo.setVisibility(View.GONE);
                 //Log.i("TAG", bookingCurrent.toString());
                 if(null!= bookingCurrent) {
+                    currentBookingStatus.setVisibility(View.GONE);
+                    currentBookingInfo.setVisibility(View.VISIBLE);
                     serviceId.setText(bookingCurrent.getServiceId());
                     eta.setText(bookingCurrent.getEta());
                     waitQueue.setText(bookingCurrent.getQueuePosition());
@@ -210,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
                     bankerName.setText("Not Yet Assignd");
                 }
 
-                serviceId.setText("There are no current bookings");
 
                 //mRef1.re
             }
