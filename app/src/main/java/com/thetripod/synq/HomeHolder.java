@@ -4,7 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class HomeHolder extends RecyclerView.ViewHolder {
@@ -23,8 +30,23 @@ public class HomeHolder extends RecyclerView.ViewHolder {
             field.setText(bookingId);
         }
         public void setBankerId(String bankerId) {
-            TextView field = (TextView) mView.findViewById(R.id.bankerID);
-            field.setText(bankerId);
+            final TextView field = (TextView) mView.findViewById(R.id.bankerID);
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+            final DatabaseReference mRef2 = mDatabase.child("Banker").child(bankerId);
+            mRef2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    BankerDetails bankerDetails = dataSnapshot.getValue(BankerDetails.class);
+
+                    field.setText(bankerDetails.getName());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }
         public void setServiceId(String serviceId) {
             TextView field = (TextView) mView.findViewById(R.id.serviceID);
