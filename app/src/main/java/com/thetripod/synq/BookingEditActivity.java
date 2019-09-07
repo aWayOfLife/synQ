@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class BookingEditActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
 
@@ -27,6 +31,7 @@ public class BookingEditActivity extends AppCompatActivity implements
     private Spinner spin_city,spin_branch,spin_slot;
     private EditText serviceId ;
     private String city , branch , mUserId , date;
+
 
 
     @Override
@@ -40,14 +45,15 @@ public class BookingEditActivity extends AppCompatActivity implements
         spin_city = findViewById(R.id.spin_city);
         spin_branch= findViewById(R.id.spin_branch);
         spin_slot = findViewById(R.id.spin_slot);
-        city = "Delhi";
-        branch = "AF SCHOOL DELHI";
-        date = "01-09-2019";
+        city = "Bangalore";
+        branch = getIntent().getStringExtra("BRANCH_NAME");
+        //date = "01-09-2019";
         spin_city.setOnItemSelectedListener(this);
         spin_city.setVisibility(View.GONE);
         spin_branch.setVisibility(View.GONE);
-
+        date = convertTimestampToDate(System.currentTimeMillis());
         populateBooking();
+
 
 
         FloatingActionButton fab_reshedule = findViewById(R.id.reschedule);
@@ -128,7 +134,8 @@ public class BookingEditActivity extends AppCompatActivity implements
 
 
 
-                nDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Queue").child(date)
+                nDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Queue")
+                        .child(date)
                         .child(availableslot).child(bookingCurrent.getBookingTimestamp());
                 nDatabase.setValue(book);
 
@@ -141,6 +148,14 @@ public class BookingEditActivity extends AppCompatActivity implements
             }
 
         });
+    }
+
+    public String convertTimestampToDate(Long timestamp)
+    {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        return date;
     }
 
     public void dataDelete(){

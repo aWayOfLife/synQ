@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,15 +18,18 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-public class BookingActivity extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener {
+public class BookingActivity extends AppCompatActivity /*implements
+        AdapterView.OnItemSelectedListener */{
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private DatabaseReference nDatabase;
-    private Spinner spin_city,spin_branch,spin_slot;
+    private Spinner spin_branch,spin_slot;
+    private String city,branch;
 
 
     @Override
@@ -33,10 +37,13 @@ public class BookingActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         mAuth = FirebaseAuth.getInstance();
-        spin_city = (Spinner)findViewById(R.id.spin_city);
+       // spin_city = (Spinner)findViewById(R.id.spin_city);
         spin_branch= (Spinner)findViewById(R.id.spin_branch);
-        spin_city.setOnItemSelectedListener(this);
+        spin_branch.setVisibility(View.GONE);
+        //spin_city.setOnItemSelectedListener(this);
         FloatingActionButton fab = findViewById(R.id.confirm_booking);
+        branch=getIntent().getStringExtra("BRANCH_NAME");
+        city="Bangalore";
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,14 +58,18 @@ public class BookingActivity extends AppCompatActivity implements
         String availableslot=String.valueOf(spin_slot.getSelectedItem());
         EditText serviceId = findViewById(R.id.enter_activity);
         long timestamp = System.currentTimeMillis();
-        String sp2= String.valueOf(spin_branch.getSelectedItem());String city =  String.valueOf(spin_city.getSelectedItem());
+       // String sp2= String.valueOf(spin_branch.getSelectedItem());
+        //String city =  String.valueOf(spin_city.getSelectedItem());
+
         String userId = mAuth.getCurrentUser().getUid();
-        String branch = sp2;
-        String date = "01-09-2019";
+        //String branch = sp2;
+        //String date = "01-09-2019";
         //String availableSlot = "1";
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
 
-
-        Toast.makeText(this, sp2, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, sp2, Toast.LENGTH_SHORT).show();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Current");
         BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch , timestamp+"","ongoing","20 mins","10", "1",null);
         mDatabase.child(userId).setValue(bookingCurrent);
@@ -70,7 +81,7 @@ public class BookingActivity extends AppCompatActivity implements
 
     }
 
-    @Override
+   /* @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         String sp1= String.valueOf(spin_city.getSelectedItem());
@@ -120,5 +131,5 @@ public class BookingActivity extends AppCompatActivity implements
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
+    }*/
 }

@@ -28,18 +28,17 @@
                 android:text="Bangalore"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-            <TextView
-                android:paddingLeft="40dp"
+
+            <Spinner
+                android:paddingLeft="35dp"
                 android:paddingRight="40dp"
-                android:id="@+id/branch_name_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                android:text="Card Centre Branch"
-                android:textSize="15sp" />
-
-
+                android:entries="@array/bangalore_selector"
+                android:id="@+id/branch_name_main"
+                />
 
 
 

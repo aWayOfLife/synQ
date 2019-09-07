@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView logout, bankerName, slot, serviceId, waitQueue, eta,branchNameMain;
     TextView currentBookingStatus;
     LinearLayout currentBookingInfo;
-    private Spinner sp;
+    FloatingActionButton fab,fab_edit;
+    private String selectedItem;
+    private Spinner spin_main;
+    private String city = "Bangalore";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,36 +62,49 @@ public class MainActivity extends AppCompatActivity {
         slot = findViewById(R.id.slot_current);
         waitQueue = findViewById(R.id.waitQueue_current);
         eta = findViewById(R.id.eta_current);
+        spin_main=findViewById(R.id.branch_name_main);
+        selectedItem = "Card Centre";
+        spin_main.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                selectedItem = parent.getItemAtPosition(position).toString(); //this is your selected item
+                viewPreviousBookings();
+                viewCurrentBookings();
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
 
+            }
+        });
         currentBookingInfo = findViewById(R.id.current_booking_info);
         currentBookingStatus = findViewById(R.id.current_booking_status);
-
-
-
-        branchNameMain=findViewById(R.id.branch_name_main);
 
         FirebaseApp.initializeApp(this);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        FloatingActionButton fab = findViewById(R.id.new_booking);
+
+        fab = findViewById(R.id.new_booking);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startBookingActivity=new Intent(MainActivity.this,BookingActivity.class);
+                startBookingActivity.putExtra("BRANCH_NAME" , String.valueOf(spin_main.getSelectedItem()));
                 startActivity(startBookingActivity);
             }
         });
-
-        FloatingActionButton fab_edit = findViewById(R.id.edit_booking);
+        fab_edit = findViewById(R.id.edit_booking);
         fab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startBookingActivity=new Intent(MainActivity.this,BookingEditActivity.class);
+                startBookingActivity.putExtra("BRANCH_NAME" , String.valueOf(spin_main.getSelectedItem()));
                 startActivity(startBookingActivity);
             }
         });
 
+        fab_edit.hide();
+        fab.hide();
 
         viewPreviousBookings();
         viewCurrentBookings();
@@ -151,10 +168,8 @@ public class MainActivity extends AppCompatActivity {
 
     void viewPreviousBookings() {
 
+        String branch = selectedItem;
         String userId = mAuth.getCurrentUser().getUid();
-        long  timestamp = System.currentTimeMillis();
-        String branch = "AF SCHOOL DELHI";
-        String city = "Delhi";
         Query query = FirebaseDatabase.getInstance()
                 .getReference().child("bookings").child(city).child(branch).child("Booking_Completed").child(userId);
         FirebaseRecyclerOptions<BookingCompleted> options =
@@ -191,8 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
     void viewCurrentBookings(){
 
-        String branch = "AF SCHOOL DELHI";
-        String city = "Delhi";
+        String branch = selectedItem;
         Toast.makeText(MainActivity.this, mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
         final DatabaseReference mRef1 = mDatabase.child("bookings").child(city).child(branch).child("Booking_Current").child(mAuth.getCurrentUser().getUid());
         Log.i("REERENCE",mRef1.toString());
@@ -203,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
                 currentBookingStatus.setVisibility(View.VISIBLE);
                 currentBookingStatus.setText("There are no current bookings");
                 currentBookingInfo.setVisibility(View.GONE);
+                fab_edit.hide();
+                fab.show();
                 //Log.i("TAG", bookingCurrent.toString());
                 if(null!= bookingCurrent) {
                     currentBookingStatus.setVisibility(View.GONE);
@@ -225,8 +241,12 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
+                        fab.hide();
+                        fab_edit.hide();
                     }
-                    bankerName.setText("Not Yet Assignd");
+                    bankerName.setText("Not Yet Assigned");
+                    fab.hide();
+                    fab_edit.show();
                 }
 
 
