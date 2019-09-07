@@ -150,8 +150,7 @@ public class BookingEditActivity extends AppCompatActivity implements
         });
     }
 
-    public String convertTimestampToDate(Long timestamp)
-    {
+    public String convertTimestampToDate(Long timestamp){
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp);
         String date = DateFormat.format("dd-MM-yyyy", cal).toString();

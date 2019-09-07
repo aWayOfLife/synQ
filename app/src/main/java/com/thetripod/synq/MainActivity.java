@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         waitQueue = findViewById(R.id.waitQueue_current);
         eta = findViewById(R.id.eta_current);
         spin_main=findViewById(R.id.branch_name_main);
-        selectedItem = "Card Centre";
+        selectedItem = String.valueOf(spin_main.getSelectedItem());
         spin_main.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
@@ -169,9 +169,13 @@ public class MainActivity extends AppCompatActivity {
     void viewPreviousBookings() {
 
         String branch = selectedItem;
+        Toast.makeText(MainActivity.this, city+branch,Toast.LENGTH_SHORT).show();
         String userId = mAuth.getCurrentUser().getUid();
+        /*Query query = FirebaseDatabase.getInstance()
+                .getReference().child("bookings").child(city).child(branch).child("Booking_Completed").child(userId);*/
         Query query = FirebaseDatabase.getInstance()
-                .getReference().child("bookings").child(city).child(branch).child("Booking_Completed").child(userId);
+                .getReference().child("bookings").child("Booking_Completed").child(userId);
+        Log.i("QUERY",query.toString());
         FirebaseRecyclerOptions<BookingCompleted> options =
                 new FirebaseRecyclerOptions.Builder<BookingCompleted>()
                         .setQuery(query, BookingCompleted.class)
