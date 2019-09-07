@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Today - August 31"
+            android:fontFamily="@font/quicksand_regular"
+            android:textSize="28sp"
+            android:textColor="@color/appThemeColorDark"/>
+        <TextView
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BOOKING ID : 31AUG20195689"
+            android:fontFamily="@font/quicksand_regular"
+            android:textSize="14sp"
+            android:textColor="@color/appThemeColorTextLight"/>
+        <FrameLayout
+            android:paddingBottom="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chip"/>
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10 am - 12 pm"
+                android:fontFamily="@font/quicksand_regular"
+                android:textSize="14sp"
+                android:textColor="@color/appThemeColorText"/>
+        </FrameLayout>
+        <TextView
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="22m 60s eta"
+            android:fontFamily="@font/quicksand_regular"
+            android:textSize="28sp"
+            android:textColor="@color/appThemeColorDark"/>
+        <LinearLayout
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="waiting behind queue"
+                android:fontFamily="@font/quicksand_regular"
+                android:textSize="16sp"
+                android:textColor="@color/appThemeColorText"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <view
+                    android:layout_marginLeft="20dp"
+                    android:paddingTop="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:backgroundTint="@color/appThemeColorSecondary"/>
+                <view
+                    android:layout_marginLeft="20dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:backgroundTint="@color/appThemeColorPrimary"/>
+            </FrameLayout>
+
+        </LinearLayout>
+        <view
+
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:backgroundTint="@color/appThemeColorTextLight"/>
+
+        <TextView
+            android:paddingTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cash withdrawal"
+            android:fontFamily="@font/quicksand_regular"
+            android:textSize="16sp"
+            android:textColor="@color/appThemeColorText"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/appThemeColorPrimary"/>
+</FrameLayout>
