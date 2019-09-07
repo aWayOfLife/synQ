@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="appThemeColorPrimary">#f24f4f</color>
+    <color name="appThemeColorSecondary">#eeeeee</color>
+
+    <color name="appThemeColorText">#707070</color>
+    <color name="appThemeColorTextLight">#acacac</color>
+
+    <color name="appThemeColorDark">#202020</color>
+
 </resources>
