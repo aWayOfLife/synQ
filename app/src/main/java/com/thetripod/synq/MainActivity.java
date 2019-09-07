@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         currentBookingInfo = findViewById(R.id.current_booking_info);
         currentBookingStatus = findViewById(R.id.current_booking_status);
 
+
+
         branchNameMain=findViewById(R.id.branch_name_main);
 
         FirebaseApp.initializeApp(this);
@@ -76,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startBookingActivity);
             }
         });
+
+        FloatingActionButton fab_edit = findViewById(R.id.edit_booking);
+        fab_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startBookingActivity=new Intent(MainActivity.this,BookingEditActivity.class);
+                startActivity(startBookingActivity);
+            }
+        });
+
+
         viewPreviousBookings();
         viewCurrentBookings();
         //String spin=String.valueOf(sp.getSelectedItem());
