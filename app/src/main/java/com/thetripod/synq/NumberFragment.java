@@ -154,6 +154,7 @@ public class NumberFragment extends Fragment {
         }
         else {
             //String phonenumberfull = "+" + number;
+            //Something
 
             return number;
         }
