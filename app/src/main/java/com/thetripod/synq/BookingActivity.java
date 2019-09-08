@@ -71,11 +71,11 @@ public class BookingActivity extends AppCompatActivity /*implements
 
         //Toast.makeText(this, sp2, Toast.LENGTH_SHORT).show();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Current");
-        BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch , timestamp+"","ongoing","20 mins","10", "1",null);
+        BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch , timestamp+"","ongoing","20 mins","10", "31AUG20195858",null);
         mDatabase.child(userId).setValue(bookingCurrent);
 
         nDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Queue").child(date).child(availableslot);
-        BookingCurrent bookingQueueItem = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch, timestamp+"","ongoing","20 mins","10", "1",null);
+        BookingCurrent bookingQueueItem = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch, timestamp+"","ongoing","20 mins","10", "1AUG20195858",null);
         nDatabase.child(""+timestamp).setValue(bookingQueueItem);
 
 

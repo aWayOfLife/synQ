@@ -81,11 +81,11 @@
                     android:id="@+id/current_booking_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
--->                 <LinearLayout
+                 <LinearLayout
                 android:paddingBottom="10dp"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/current_booking_info"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
