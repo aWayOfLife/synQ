@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,10 +42,11 @@ public class OTPFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private String verificationCode;
     private String otp_final;
-
+    private TextView resend_otp;
     private FirebaseUser use;
     private String userId ;
     DatabaseReference firebaseDatabase;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     public OTPFragment() {
         // Required empty public constructor
@@ -78,9 +80,16 @@ public class OTPFragment extends Fragment {
         OTP=rootView.findViewById(R.id.enter_otp);
         firebaseDatabase= FirebaseDatabase.getInstance().getReference().child("User");
         mAuth = FirebaseAuth.getInstance();
+        resend_otp=rootView.findViewById(R.id.resend_otp);
         /*use = FirebaseAuth.getInstance().getCurrentUser();
 
         userId = use.getUid();*/
+        resend_otp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resendVerificationCode(phone_number,mResendToken);
+            }
+        });
         phoneVerificationCode(phone_number);
         confirm_otp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,8 +182,9 @@ public class OTPFragment extends Fragment {
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationCode=s;
+            mResendToken = forceResendingToken;
         }
-        // esheche bol 713017
+
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -196,6 +206,17 @@ public class OTPFragment extends Fragment {
         }
     };
 
+    // [START resend_verification]
+    private void resendVerificationCode(String phoneNumber,
+                                        PhoneAuthProvider.ForceResendingToken token) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                getActivity(),               // Activity (for callback binding)
+                mCallback,         // OnVerificationStateChangedCallbacks
+                token);             // ForceResendingToken from callbacks
+    }
 
 
 }

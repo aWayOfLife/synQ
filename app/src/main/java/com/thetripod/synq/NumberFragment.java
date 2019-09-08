@@ -82,21 +82,24 @@ public class NumberFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CountryCodePicker ccp;
-                ccp = (CountryCodePicker)rootView.findViewById(R.id.ccp);
+                ccp = (CountryCodePicker) rootView.findViewById(R.id.ccp);
 
-                String numWithCode=ccp.getSelectedCountryCodeWithPlus() + phoneNumber.getText().toString().trim();
+                String numWithCode = ccp.getSelectedCountryCodeWithPlus() + phoneNumber.getText().toString().trim();
                 String number = NumberToFirebase(numWithCode);
-                Log.i("NumCheck",number);
-                Bundle args = new Bundle();
-                args.putString("NUMBER_TRANSFER",number);
-                args.putString("NAME_USER",name.getText().toString().trim());
-                OTPFragment fragment = new OTPFragment();
-                fragment.setArguments(args);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container_login, fragment);
-                //fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (null != number) {
+                    Log.i("NumCheck", number);
+                    Bundle args = new Bundle();
+                    args.putString("NUMBER_TRANSFER", number);
+                    args.putString("NAME_USER", name.getText().toString().trim());
+                    OTPFragment fragment = new OTPFragment();
+                    fragment.setArguments(args);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container_login, fragment);
+                    //fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
+                }
             }
         });
         return rootView;
@@ -144,15 +147,15 @@ public class NumberFragment extends Fragment {
 
     String NumberToFirebase(String number)
     {
-        if(number.isEmpty()||number.length()<12) {
-            phoneNumber.setError("Enter number");
+        if(number.isEmpty()||number.length()!=13) {
+            phoneNumber.setError("Enter correct number");
             phoneNumber.requestFocus();
             return null;
         }
         else {
             //String phonenumberfull = "+" + number;
-            String phonenumberfull =  number;
-            return phonenumberfull;
+
+            return number;
         }
     }
 }

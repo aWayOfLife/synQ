@@ -26,4 +26,12 @@
         <item>13:00 - 14:00</item>
         <item>15:00 - 16:00</item>
     </string-array>
+
+    <string-array name="service_selector">
+        <item>opening account</item>
+        <item>closing account</item>
+        <item>cash deposit</item>
+        <item>cash withdrawal</item>
+        <item>money transfer</item>
+    </string-array>
 </resources>
