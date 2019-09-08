@@ -52,13 +52,13 @@
                 android:fontFamily="@font/quicksand_medium"
                 android:textColor="@color/appThemeColorDark"
                 android:textSize="20sp"/>
-            <androidx.appcompat.widget.AppCompatTextView
+            <Spinner
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cash withdrawal"
-                android:fontFamily="@font/quicksand_medium"
-                android:textColor="@color/appThemeColorText"
-                android:textSize="16sp"/>
+                android:layout_marginLeft="-7dp"
+                android:entries="@array/service_selector"
+                android:id="@+id/edit_booking_service_id" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="50dp"
@@ -72,98 +72,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="booking slot"
-                android:paddingBottom="20dp"
+                android:paddingBottom="10dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:textColor="@color/appThemeColorDark"
                 android:textSize="20sp"/>
-            <LinearLayout
+            <Spinner
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <FrameLayout
-
-                    android:paddingBottom="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chip"/>
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="10 am - 12 pm"
-                        android:fontFamily="@font/quicksand_regular"
-                        android:textSize="14sp"
-                        android:textColor="@color/appThemeColorText"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:paddingBottom="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chip"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/quicksand_regular"
-                        android:text="12 pm - 2 pm"
-                        android:textColor="@color/appThemeColorText"
-                        android:textSize="14sp" />
-                </FrameLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <FrameLayout
-                    android:paddingBottom="10dp"
-                    android:paddingRight="20dp"
-
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chip"/>
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="2 pm - 3 pm"
-                        android:fontFamily="@font/quicksand_regular"
-                        android:textSize="14sp"
-                        android:textColor="@color/appThemeColorText"/>
-                </FrameLayout>
-                <FrameLayout
-
-                    android:paddingBottom="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_chip"/>
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="3 pm - 4 pm"
-                        android:fontFamily="@font/quicksand_regular"
-                        android:textSize="14sp"
-                        android:textColor="@color/appThemeColorText"/>
-                </FrameLayout>
-            </LinearLayout>
+                android:layout_marginLeft="-7dp"
+                android:entries="@array/slot_selector"
+                android:id="@+id/edit_booking_slot" />
 
         </LinearLayout>
 
@@ -171,74 +90,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
 
-        android:paddingBottom="20dp"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_marginBottom="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_weight="1"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="center_horizontal"
-            android:text="cancel"
-            android:textColor="@color/appThemeColorText"
-            android:textSize="18sp" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <FrameLayout
-                android:layout_marginBottom="-20dp"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:backgroundTint="@color/appThemeColorDark"
-                    android:layout_gravity="center"
-                    android:layout_width="200dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_rounded_button_red"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="-3dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:text="delete"
-                    android:textColor="#ffffff"
-                    android:textSize="16sp" />
-            </FrameLayout>
-            <FrameLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="200dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_rounded_button_red"/>
-                <TextView
-                    android:layout_marginTop="-3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="confirm"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:textSize="16sp"/>
-            </FrameLayout>
-        </LinearLayout>
-
-
-    </LinearLayout>
 
 
 

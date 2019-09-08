@@ -3,50 +3,56 @@
     android:background="#eeeeee"
     android:layout_marginRight="20dp">
     <LinearLayout
-        android:padding="35dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:paddingBottom="10dp"
+            android:id="@+id/completed_service_Id"
+            android:paddingBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="cash withdrawal"
             android:fontFamily="@font/quicksand_regular"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@color/appThemeColorDark"/>
         <TextView
-            android:paddingBottom="20dp"
+            android:id="@+id/completed_booking_id"
+            android:paddingBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BOOKING ID : 31AUG20195689"
             android:fontFamily="@font/quicksand_regular"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/appThemeColorTextLight"/>
 
-        <view
+        <ImageView
 
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:backgroundTint="@color/appThemeColorText"/>
+            android:background="@color/appThemeColorTextLight"/>
 
         <TextView
-            android:paddingTop="20dp"
+            android:id="@+id/completed_banker_id"
+            android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="served by Saptarshi De"
             android:fontFamily="@font/quicksand_regular"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textColor="@color/appThemeColorDark"/>
         <TextView
-
+            android:id="@+id/completed_booking_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="31 AUG 2019 - 10:48 AM"
             android:fontFamily="@font/quicksand_regular"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/appThemeColorTextLight"/>
 
 

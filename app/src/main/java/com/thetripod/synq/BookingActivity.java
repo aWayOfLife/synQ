@@ -11,15 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
-import java.util.List;
+
 import java.util.Locale;
 
 public class BookingActivity extends AppCompatActivity /*implements
@@ -28,108 +27,70 @@ public class BookingActivity extends AppCompatActivity /*implements
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private DatabaseReference nDatabase;
-    private Spinner spin_branch,spin_slot;
+    private Spinner newBookingServiceId,newBookingSlot;
     private String city,branch;
+
+    private TextView cancelNewBooking, confirmNewBooking;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking);
-        mAuth = FirebaseAuth.getInstance();
-       // spin_city = (Spinner)findViewById(R.id.spin_city);
-        spin_branch= (Spinner)findViewById(R.id.spin_branch);
-        spin_branch.setVisibility(View.GONE);
-        //spin_city.setOnItemSelectedListener(this);
-        FloatingActionButton fab = findViewById(R.id.confirm_booking);
+        setContentView(R.layout.activity_booking_modified);
+
         branch=getIntent().getStringExtra("BRANCH_NAME");
         city="Bangalore";
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        cancelNewBooking = findViewById(R.id.cancel_booking);
+        confirmNewBooking = findViewById(R.id.confirm_booking);
+
+        cancelNewBooking.setClickable(true);
+        confirmNewBooking.setClickable(true);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        confirmNewBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataEntry();
                 finish();
             }
         });
+
+        cancelNewBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     public void dataEntry(){
-        spin_slot = findViewById(R.id.spin_slot);
-        String availableslot=String.valueOf(spin_slot.getSelectedItem());
-        EditText serviceId = findViewById(R.id.enter_activity);
+        newBookingSlot = findViewById(R.id.new_booking_slot);
+        newBookingServiceId = findViewById(R.id.new_booking_service_id);
+        String bookingSlot = String.valueOf(newBookingSlot.getSelectedItem());
+        String bookingServiceId = String.valueOf(newBookingServiceId.getSelectedItem());
         long timestamp = System.currentTimeMillis();
-       // String sp2= String.valueOf(spin_branch.getSelectedItem());
-        //String city =  String.valueOf(spin_city.getSelectedItem());
 
         String userId = mAuth.getCurrentUser().getUid();
-        //String branch = sp2;
-        //String date = "01-09-2019";
-        //String availableSlot = "1";
+
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp);
-        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        String bookingDate = DateFormat.format("dd-MM-yyyy", cal).toString();
 
-        //Toast.makeText(this, sp2, Toast.LENGTH_SHORT).show();
+        String bookingStatus = "waiting in queue";
+        String bookingId ="B" + DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString().replaceAll("-","").replaceAll(" ","").replaceAll(":","");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Current");
-        BookingCurrent bookingCurrent = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch , timestamp+"","ongoing","20 mins","10", "1",null);
+        BookingCurrent bookingCurrent = new BookingCurrent(userId, bookingServiceId,bookingSlot, branch , timestamp+"",bookingStatus,"20 mins","10", bookingId,null);
         mDatabase.child(userId).setValue(bookingCurrent);
 
-        nDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Queue").child(date).child(availableslot);
-        BookingCurrent bookingQueueItem = new BookingCurrent(userId, serviceId.getText().toString(),availableslot, branch, timestamp+"","ongoing","20 mins","10", "1",null);
+        nDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Queue").child(bookingDate).child(bookingSlot);
+        BookingCurrent bookingQueueItem = new BookingCurrent(userId, bookingServiceId, bookingSlot, branch, timestamp+"","ongoing","20 mins","10", bookingId,null);
         nDatabase.child(""+timestamp).setValue(bookingQueueItem);
 
 
     }
 
-   /* @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        String sp1= String.valueOf(spin_city.getSelectedItem());
-        Toast.makeText(this, sp1, Toast.LENGTH_SHORT).show();
-        if(sp1.contentEquals("Kolkata")) {
-            List<String> list = new ArrayList<String>();
-            list.add("FGMO, KOLKATA");
-
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, list);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            dataAdapter.notifyDataSetChanged();
-            spin_branch.setAdapter(dataAdapter);
-        }
-        if(sp1.contentEquals("Delhi")) {
-            List<String> list = new ArrayList<String>();
-            list.add("LAVI PUB SCHOOL GHEVRA");
-            list.add("AF SCHOOL DELHI");
-            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, list);
-            dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            dataAdapter2.notifyDataSetChanged();
-            spin_branch.setAdapter(dataAdapter2);
-        }
-        if(sp1.contentEquals("Bangalore")) {
-            List<String> list = new ArrayList<String>();
-            list.add("CARD CENTRE");
-            list.add("CO GAD BANGALORE");
-            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, list);
-            dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            dataAdapter2.notifyDataSetChanged();
-            spin_branch.setAdapter(dataAdapter2);
-        }
-        if(sp1.contentEquals("Mumbai")) {
-            List<String> list = new ArrayList<String>();
-            list.add("MUMBAI FORT");
-            list.add("MUMBAI KHAR");
-            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, list);
-            dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            dataAdapter2.notifyDataSetChanged();
-            spin_branch.setAdapter(dataAdapter2);
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }*/
 }

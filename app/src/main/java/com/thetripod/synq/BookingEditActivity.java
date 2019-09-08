@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,36 +29,48 @@ public class BookingEditActivity extends AppCompatActivity implements
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase , nDatabase , pDatabase;
-    private Spinner spin_city,spin_branch,spin_slot;
+    private Spinner editBookingServiceId, editBookingSlot;
     private EditText serviceId ;
     private String city , branch , mUserId , date;
 
+    private TextView cancelEditBooking, confirmEditBooking, deleteEditBooking ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking_edit);
+        setContentView(R.layout.activity_booking_edit_modified);
+
+        city = "Bangalore";
+        branch = getIntent().getStringExtra("BRANCH_NAME");
 
         mAuth = FirebaseAuth.getInstance();
         mUserId = mAuth.getCurrentUser().getUid();
-        serviceId = findViewById(R.id.enter_activity);
-        spin_city = findViewById(R.id.spin_city);
-        spin_branch= findViewById(R.id.spin_branch);
-        spin_slot = findViewById(R.id.spin_slot);
-        city = "Bangalore";
-        branch = getIntent().getStringExtra("BRANCH_NAME");
-        //date = "01-09-2019";
-        spin_city.setOnItemSelectedListener(this);
-        spin_city.setVisibility(View.GONE);
-        spin_branch.setVisibility(View.GONE);
+
+        editBookingServiceId = findViewById(R.id.edit_booking_service_id);
+        editBookingSlot = findViewById(R.id.edit_booking_slot);
+
         date = convertTimestampToDate(System.currentTimeMillis());
+
         populateBooking();
 
+        cancelEditBooking = findViewById(R.id.cancel_edit_booking);
+        confirmEditBooking = findViewById(R.id.reschedule_edit_booking);
+        deleteEditBooking = findViewById(R.id.delete_edit_booking);
+        cancelEditBooking.setClickable(true);
+        confirmEditBooking.setClickable(true);
+        deleteEditBooking.setClickable(true);
 
 
-        FloatingActionButton fab_reshedule = findViewById(R.id.reschedule);
-        fab_reshedule.setOnClickListener(new View.OnClickListener() {
+
+        cancelEditBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        confirmEditBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataReschedule();
@@ -65,14 +78,15 @@ public class BookingEditActivity extends AppCompatActivity implements
             }
         });
 
-        FloatingActionButton fab_delete = findViewById(R.id.delete);
-        fab_delete.setOnClickListener(new View.OnClickListener() {
+        deleteEditBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataDelete();
                 finish();
             }
         });
+
+
     }
 
     @Override
@@ -92,15 +106,23 @@ public class BookingEditActivity extends AppCompatActivity implements
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BookingCurrent bookingCurrent = dataSnapshot.getValue(BookingCurrent.class);
-                serviceId.setText(bookingCurrent.getServiceId());
+                //serviceId.setText(bookingCurrent.getServiceId());
+                String service = bookingCurrent.getServiceId();
+                ArrayAdapter<CharSequence> service_adapter = ArrayAdapter.createFromResource(BookingEditActivity.this, R.array.service_selector, android.R.layout.simple_spinner_item);
+                service_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                editBookingServiceId.setAdapter(service_adapter);
+                if (service != null) {
+                    int spinnerPosition = service_adapter.getPosition(service);
+                    editBookingServiceId.setSelection(spinnerPosition);
+                }
 
                 String compareValue = bookingCurrent.getSlot();
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(BookingEditActivity.this, R.array.slot_selector, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spin_slot.setAdapter(adapter);
+                editBookingSlot.setAdapter(adapter);
                 if (compareValue != null) {
                     int spinnerPosition = adapter.getPosition(compareValue);
-                    spin_slot.setSelection(spinnerPosition);
+                    editBookingSlot.setSelection(spinnerPosition);
                 }
                 pDatabase.removeEventListener(this);
             }
@@ -116,7 +138,8 @@ public class BookingEditActivity extends AppCompatActivity implements
 
     public void dataReschedule(){
 
-        final String availableslot = String.valueOf(spin_slot.getSelectedItem());
+        final String availableslot = String.valueOf(editBookingSlot.getSelectedItem());
+        final String serviceId = String.valueOf(editBookingServiceId.getSelectedItem());
         pDatabase = FirebaseDatabase.getInstance().getReference().child("bookings").child(city).child(branch).child("Booking_Current")
                 .child(mAuth.getCurrentUser().getUid());
         pDatabase.addValueEventListener(new ValueEventListener() {
@@ -127,7 +150,7 @@ public class BookingEditActivity extends AppCompatActivity implements
                         .child(bookingCurrent.getSlot()).child(bookingCurrent.getBookingTimestamp());
                 mDatabase.removeValue();
 
-                BookingCurrent book = new BookingCurrent(mUserId , serviceId.getText().toString() , availableslot , bookingCurrent.getBranch() ,
+                BookingCurrent book = new BookingCurrent(mUserId ,serviceId , availableslot , bookingCurrent.getBranch() ,
                         bookingCurrent.getBookingTimestamp() , bookingCurrent.getStatus() , bookingCurrent.getEta() , bookingCurrent.getQueuePosition() ,
                         bookingCurrent.getBookingId() , null);
                 pDatabase.setValue(book);

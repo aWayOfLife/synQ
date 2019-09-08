@@ -21,19 +21,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <androidx.appcompat.widget.AppCompatTextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Maharashtra"
+                    android:text="Bangalore"
                     android:fontFamily="@font/quicksand_medium"
                     android:textColor="@color/appThemeColorDark"
-                    android:textSize="20sp"/>
-                <androidx.appcompat.widget.AppCompatTextView
+                    android:textSize="18sp"/>
+                <Spinner
+                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MP Birla School"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textColor="@color/appThemeColorText"
-                    android:textSize="16sp"/>
+                    android:layout_marginLeft="-7dp"
+                    android:entries="@array/bangalore_selector"
+                    android:id="@+id/branch_name" />
             </LinearLayout>
 
             <ImageView
@@ -45,31 +46,34 @@
 
 
         <LinearLayout
-            android:visibility="gone"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
-                android:paddingTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:paddingLeft="35dp"
-                    android:paddingBottom="15dp"
+
+                    android:visibility="visible"
+                    android:paddingTop="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="active booking"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textColor="@color/appThemeColorTextLight"/>
+                    android:orientation="vertical">
+                    <TextView
+                        android:paddingLeft="35dp"
+                        android:paddingBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="active booking"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/appThemeColorTextLight"/>
+
+                    <include layout="@layout/item_current_booking"/>
+
+                </LinearLayout>
 
 
 
-            </LinearLayout>
-
-
-            <include layout="@layout/item_current_booking"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,7 +93,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
-                    android:id="@+id/my_recycler_view"
+                    android:id="@+id/booking_list"
                     android:orientation="horizontal"
                     tools:listitem="@layout/item_booking_modified"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -98,29 +102,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:visibility="visible"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/undraw_empty"
-                android:paddingBottom="50dp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="no bookings here"
-                android:fontFamily="@font/quicksand_medium"
-                android:textColor="@color/appThemeColorText"
-                android:textSize="18sp"/>
-        </LinearLayout>
 
 
     </LinearLayout>

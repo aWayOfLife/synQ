@@ -26,11 +26,11 @@ public class HomeHolder extends RecyclerView.ViewHolder {
         }
 
         public void setBookingId(String bookingId) {
-            TextView field = (TextView) mView.findViewById(R.id.bookingID);
+            TextView field = (TextView) mView.findViewById(R.id.completed_booking_id);
             field.setText(bookingId);
         }
         public void setBankerId(String bankerId) {
-            final TextView field = (TextView) mView.findViewById(R.id.bankerID);
+            final TextView field = (TextView) mView.findViewById(R.id.completed_banker_id);
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
             final DatabaseReference mRef2 = mDatabase.child("Banker").child(bankerId);
             mRef2.addValueEventListener(new ValueEventListener() {
@@ -49,13 +49,13 @@ public class HomeHolder extends RecyclerView.ViewHolder {
 
         }
         public void setServiceId(String serviceId) {
-            TextView field = (TextView) mView.findViewById(R.id.serviceID);
+            TextView field = (TextView) mView.findViewById(R.id.completed_service_Id);
             field.setText(serviceId);
         }
         public void setBookingTimestamp(String bookingTimestamp){
-            TextView field = (TextView)mView.findViewById(R.id.timeStamp);
+            TextView field = (TextView)mView.findViewById(R.id.completed_booking_date);
         }
-        public void setBranch(String branchName){
+        /*public void setBranch(String branchName){
             TextView field = (TextView)mView.findViewById(R.id.branch);
-        }
+        }*/
 }

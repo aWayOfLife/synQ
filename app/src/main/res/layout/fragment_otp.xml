@@ -22,5 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="confirm otp"/>
+        <TextView
+            android:id="@+id/resend_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="resend code"
+            android:textAlignment="center"
+            android:textSize="15sp" />
+
     </LinearLayout>
 </FrameLayout>
