@@ -28,14 +28,11 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
         spinBranch = findViewById(R.id.branch_name);
         selectedBranch = String.valueOf(spinBranch.getSelectedItem());
+        emptystate.setVisibility(View.VISIBLE);
+        filledstate.setVisibility(View.GONE);
         spinBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
@@ -238,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     emptystate.setVisibility(View.VISIBLE);
                     filledstate.setVisibility(View.GONE);
+
                 }
 
 

@@ -66,7 +66,7 @@ public class OTPFragment extends Fragment {
         if (getArguments() != null) {
             phone_number = getArguments().getString("NUMBER_TRANSFER");
             name = getArguments().getString("NAME_USER");
-            Toast.makeText(getContext(),phone_number, Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(),phone_number, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -162,7 +162,7 @@ public class OTPFragment extends Fragment {
                     startActivity(intent);
                 }else
                 {
-                    Toast.makeText(getContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                     Toast.makeText(getContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
                 }
 
             }
